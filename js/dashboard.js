@@ -1,0 +1,904 @@
+function showSection(sectionId) {
+  document.getElementById("respondent").style.display = "none";
+  document.getElementById("claimant").style.display = "none";
+  document.getElementById(sectionId).style.display = "block";
+}
+
+// Modal and accordion logic for case details
+function openCaseDetail() {
+  document.getElementById('case-detail-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeCaseDetail() {
+  document.getElementById('case-detail-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+// --- CASE DATA (from Google Sheet) ---
+const caseData = {
+    'Indo Gold v. India': {
+    'case-name': 'Indo Gold V India',
+    'full-case-name': 'Indo Gold Pty Limited v. Republic of India',
+    'case-number': 'PCA Case No. 2024-51',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '26 July 2024',
+    'seat-of-arbitration': 'United Kingdom',
+    'industries': 'Mining, Metal ores',
+    'status-of-case': 'Pending',
+    'claimant-country': 'Australia',
+    'applicable-treaties': 'Australia - India BIT (1999)',
+    'administering-institution': 'Permanent Court of Arbitration',
+    'state-gov-involved': 'Rajasthan',
+    'parties-claimant': 'Mr. Mark Bolton<br>Indo Gold Pty Limited<br><br>Mr. Ben Juratowitch KC<br>Essex Court Chambers<br><br>Ms. Belinda McRae<br>Twenty Essex Chambers<br><br>Ms. Callista Harris<br>7 Wentworth Selborne<br><br>Mr. Wade Coriell<br>Mr. Aloysius Llamzon<br>Mr. Thomas Sprange KC<br>Mr. Sajid Ahmed<br>Mr. Harry Burnett<br>Ms. Jessica Beess und Chrostin<br>Mr. Timothy McKenzie<br>Ms. Vivasvat Dadwal<br>Ms. Medhavi Singh<br>King & Spalding LLP',
+    'parties-respondent': 'Mr. V. L. Kantha Rao, Secretary<br>Ministry of Mines<br>Secretary, Department of Economic Affairs<br>Ministry of Finance<br>Law Secretary, Department of Legal Affairs<br>Ministry of Law and Justice<br>Foreign Secretary<br>Ministry of External Affairs<br>Secretary<br>Ministry of Corporate Affairs<br>Mr. Anand S. Pathak<br>Mr. Nabik Syam<br>Mr. Vijay Purohit<br>Ms. Ramya Raman<br>Mr. Shivam Dwivedi<br>Ms. Shyra Hoon<br>Mr. Tanmay Arora<br>P&A Law Offices<br>Dr. Markus Burgstaller<br>Mr. Scott Macpherson<br>Ms. Iris Sauvagnac<br>Mr. Dmytro Galagan<br>Hogan Lovells International LLP',
+    'tribunal-composition': 'President<br>Fernández-Armesto, J.<br>Arbitrator<br>Appointed by claimant<br>Alexandrov, S. A.<br>Arbitrator<br>Appointed by/designated to respondent<br>Rao, L. N.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'Details of investment<br>Investment in the Bhukia gold mining project in Rajasthan through wholly-owned local subsidiary Metal Mining Pvt Ltd.<br>Summary of the dispute<br>Claims arising out of local authorities’ rejection of the prospecting licence application made by Metal Mining Pvt Ltd for the Bhukia mining project.',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': '<a href="https://www.londonstockexchange.com/news-article/Panthera/claim-for-damages-amounting-to-us-1-58-billion/15928345" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Plc on Claim for Damages Amounting to US$1.58 billion - 19 May 2025</a>',
+    'other-documents': '<a href="https://www.londonstockexchange.com/news-article/Panthera/conditional-agreement-on-arbitration-funding/15828345" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Plc on Conditional Agreement on Arbitration Funding - 28 Feb 2023</a><br><a href="https://www.londonstockexchange.com/news-article/Panthera/arbitration-funding-confirmation-notice/15928346" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Plc on Arbitration Funding Confirmation Notice - 25 Aug 2023</a><br><a href="https://www.londonstockexchange.com/news-article/Panthera/rajasthan-high-court-decision/15928347" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Inc. on the Rajasthan High Court Decision - 27 Sept 2023</a><br><a href="https://www.londonstockexchange.com/news-article/Panthera/issuance-of-notice-of-dispute/15928348" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Plc on Issuance of Notice of Dispute - 2 Jan 2024</a><br><a href="https://www.londonstockexchange.com/news-article/Panthera/update-on-dispute-with-india/15928349" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Plc on Update on Dispute with India - 2 Apr 2024</a><br>Request for Arbitration - 26 July 2024<br><a href="https://www.londonstockexchange.com/news-article/Panthera/issuance-of-notice-of-arbitration/15928350" target="_blank" rel="noopener noreferrer">London Stock Exchange Filing of Panthera Resources Plc on Issuance of Notice of Arbitration - 26 July 2024</a><br>London Stock Exchange Filing of Panthera Resources Plc on Arbitration Update - 10 Jan 2025<br>London Stock Exchange Filing of Panthera Resources Plc on Arbitration Update - 29 Jan 2025',
+    'background-scores': '<a href="https://www.iareporter.com/arbitration-cases/indo-gold-panthera-v-india/" target="_blank" rel="noopener noreferrer">https://www.iareporter.com/arbitration-cases/indo-gold-panthera-v-india/</a>'
+  },
+  'Vedanta v. India (II)': {
+    'case-name': 'Vedanta V India (II)',
+    'full-case-name': 'Vedanta Resources Limited v. The Republic of India (II)',
+    'case-number': 'PCA Case No. 2024-43',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '22 Oct 2024',
+    'seat-of-arbitration': 'Switzerland',
+    'industries': 'Mining',
+    'status-of-case': 'Pending',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)',
+    'administering-institution': 'Permanent Court of Arbitration',
+    'state-gov-involved': 'Rajasthan',
+    'parties-claimant': 'Ms. Marie Stoyanov (from 22 May 2025)<br><br>Mr. Igor Kirillov (from 22 May 2025)<br><br>Allen Overy Shearman Sterling LLP (Paris)<br><br>Ms. Sheila Ahuja KC (from 22 May 2025)<br><br>Mr. Amrutanshu Dash (from 22 May 2025)<br><br>Allen Overy Shearman Sterling LLP (Singapore)<br><br>Mr. Arun Mal (from 22 May 2025)<br><br>Mr. Sahil Malhotra (from 22 May 2025)<br><br>Allen Overy Shearman Sterling LLP (London)<br><br>Mr. Curtis Fung (from 22 May 2025)<br><br>Allen Overy Shearman Sterling (Hong Kong SAR)<br><br>Mr. Sanjeev Kapoor<br>Ms. Saman Ahsan<br>Khaitan & Co<br><br>Ms. Faith Gay (until 11 February 2025)<br>Mr. Rajat Rana (until 11 February 2025) <br>Mr. Manuel Valderrama (until 11 February 2025)<br>Mr. Joshua W. Bean (until 11 February 2025)<br>Selendy Gay PLLC (until 11 February 2025)',
+    'parties-respondent': 'Mr. Atul Sharma<br>Mr. Shravan Yammanur<br>Mr. Mangesh Krishna<br>Ms. Prachi Kaushik<br>Dentons Link Legal<br><br>Mr. James Langley<br>Ms. Catherine Gilfedder<br>Dr. Lorna MacFarlane<br>Ms. Olivia Lee-Smith<br>Dentons UK and Middle East LLP',
+    'tribunal-composition': 'President<br>Reinisch, A.<br>Arbitrator<br>Appointed by claimant<br>Reichert, K.<br>Arbitrator<br>Appointed by/designated to respondent<br>Ramasubramanian, V.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'Data Not Available',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Data Not Available',
+    'other-documents': 'Data Not Available',
+    'background-scores': '<a href="https://globalarbitrationreview.com/article/vedanta-brings-new-treaty-claim-against-india" target="_blank" rel="noopener noreferrer">https://globalarbitrationreview.com/article/vedanta-brings-new-treaty-claim-against-india</a>'
+  },
+  'Devas v. India (II)': {
+    'case-name': 'Devas V India (II)',
+    'full-case-name': 'CC/Devas (Mauritius) Ltd., Telcom Devas Mauritius Limited, and Devas Employees Mauritius Private Limited v. Republic of India (II)',
+    'case-number': 'PCA Case No. 2022-34',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2 Feb 2022',
+    'seat-of-arbitration': 'United Kingdom',
+    'industries': 'Telecommunication, Wireless communication activities',
+    'status-of-case': 'Pending',
+    'claimant-country': 'Mauritius',
+    'applicable-treaties': 'India - Mauritius BIT (1998)',
+    'administering-institution': 'Permanent Court of Arbitration',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Mr. Jim Fleming<br>Mr. Arun Gupta<br>Mr. Rajendra Singh<br>Mr. Serge Martin<br>Mr. Ramachandran Viswanathan<br>Mr. Lawrence Babbio<br><br>CC/Devas (Mauritius) Ltd,. <br><br>Telcom Devas Mauritius Limited<br><br>Devas Employees Mauritius Private Limited<br><br>Mr. Rahim Moloo<br>Mr. Matthew D. McGill<br>Ms. Ankita Ritwik<br>Ms. Alexa Romanelli<br>Mr. Praharsh Johorey<br>Gibson, Dunn & Crutcher LLP',
+    'parties-respondent': 'Her Excellency Ms. Reenat Sandhu, Ambassador of India to the Kingdom of the Netherlands<br>Ms. K.C. Sowmya, Counsellor (Legal)<br>Embassy of India, The Hague, The Netherlands<br><br>Mr. Abhishek Singh, Joint Secretary (ED)<br>Mr. Siddharth Malik, Director (ED)<br>Mr. George Pothan Poothicote, Legal Consultant<br>Mr. Arpit Mallick, Consultant (Legal)<br>Ms. Sindhu K Acharya, Consultant (Legal)<br>Ministry of External Affairs<br><br>Smt. Sandhya Venugopal Sharma, Additional Secretary<br>Dr. M. Subramanyam, Joint Secretary<br>Mr. M. S. Krishnan, Officer on Special Duty<br>Department of Space<br><br>Ms. Reetu Jain, Economic Adviser, Investment Division<br>Ms. Supriya Anand, Deputy Director, Investment Division<br>Department of Economic Affairs<br><br>Dr. Niten Chandra, Law Secretary<br>Dr. Rajiv Mani, Additional Secretary<br>Dr. R.J.R. Kasibhatla, Additional Legal Adviser<br>Departament of Legal Affairs<br><br>Legal Counsel<br><br>Ms. Melanie Van Leeuwen<br>Mr. Stijn Wilbers<br>Mr. David Lee<br>Vanguard International Dispute Resolution',
+    'tribunal-composition': 'President<br>Zuleta, E.<br>Arbitrator<br>Appointed by claimant<br>Schill, S.<br>Arbitrator<br>Appointed by/designated to respondent<br>Raghuram, G.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'Data Not Available',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': '<a href="https://www.italaw.com/cases/documents/7339" target="_blank" rel="noopener noreferrer">Order of the Supreme Court of Mauritius - 12 Jan 2023</a>',
+    'other-documents': '<a href="https://www.italaw.com/cases/documents/7340" target="_blank" rel="noopener noreferrer">Judgment of the High Court of Justice of England and Wales [2025] EWHC 1738 - 9 July 2025</a><br>Notice of Intent - 6 May 2021<br>Notice of Arbitration - 2 Feb 2022<br>Claimants’ Statement of Claim - 23 Apr 2023',
+    'background-scores': '<a href="https://globalarbitrationreview.com/devas-investors-launch-new-claim-against-india" target="_blank" rel="noopener noreferrer">https://globalarbitrationreview.com/devas-investors-launch-new-claim-against-india</a>'
+  },
+  'Earlyguard v. India': {
+    'case-name': 'Earlyguard Limited v. India',
+    'full-case-name': 'Earlyguard Limited v. India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'Data Not Available',
+    'respondent-field': 'India',
+    'date-of-introduction': '17 Feb 2021',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Financial Services, Other non-bank financial institutions',
+    'status-of-case': 'Settled',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'United Kingdom - India BIT (1994)',
+    'administering-institution': 'Data Not Available',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Data Not Available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Data Not Available',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded through settlement<br>Data not available',
+    'latest-documents': 'Data Not Available',
+    'other-documents': 'Data Not Available',
+    'background-scores': '<a href="https://globalarbitrationreview.com/india-facing-new-retroactive-tax-claim" target="_blank" rel="noopener noreferrer">https://globalarbitrationreview.com/india-facing-new-retroactive-tax-claim</a>'
+  },
+  'GPIX v. India': {
+    'case-name': 'GPIX v. India',
+    'full-case-name': 'GPIX LLC v. The Republic of India',
+    'case-number': 'PCA Case No. 2020-36',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '9 Mar 2020',
+    'seat-of-arbitration': 'United Kingdom',
+    'industries': 'Aviation, Airport management',
+    'status-of-case': 'Concluded, Decided in favor of State',
+    'claimant-country': 'Mauritius',
+    'applicable-treaties': 'India - Mauritius BIT (1998)',
+    'administering-institution': 'Permanent Court of Arbitration',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Ms. Sylvia Noury<br>Mr. Peter Turner QC<br>Ms. Ella Davies<br>Ms. Annie Pan<br>Ms. Alexandra van der Meulen<br>Ms. Danielle Jooste<br>Mr. Rohit Bhat<br>Ms. Marina Mayer<br>Mr. Caspar Everett<br>Ms. Stephanie Mbonu <br>FRESHFIELDS BRUCKHAUS DERINGER<br>(London, United Kingdom)<br><br>Mr. Amit Sibal<br>Senior Advocate<br>SUPREME COURT OF INDIA<br>(New Delhi, India)<br><br>Mr. Aman Ahluwalia',
+    'parties-respondent': 'Her Excellency Ms. Reenat Sandhu<br>Ambassador of India<br>to the Kingdom of Netherlands<br>Ms. K.C. Sowmya<br>First Secretary Legal<br>EMBASSY OF INDIA<br>(The Hague, the Netherlands)<br><br>Smt. Rubina Ali<br>Joint Secretary<br>Shri Joyanto Chakraborty<br>Director<br>Shri Narendra Singh<br>Deputy Secretary<br>MINISTRY OF CIVIL AVIATION<br><br>Shri I.N. Murthy<br>Member (Operations)<br>Shri A.K. Rai<br>General Manager (Operations)<br>AIRPORTS AUTHORITY OF INDIA<br><br>Ms. Reetu Jain<br>Economic Advisor<br>Ms. Preeti Jain<br>Director<br>Ms. Supriya Anand<br>Deputy Director <br>Mr. Shivam Dwivedi <br>Legal Consultant<br>DEPARTMENT OF ECONOMIC AFFAIRS<br>MINISTRY OF FINANCE<br><br>Shri Anoop Kumar Mendiratta<br>Law Secretary<br>Dr. R.J.R. Kasibhatla<br>Dy. Legal Adviser<br>DEPARTMENT OF LEGAL AFFAIRS<br><br>Md. Noor Rahman Sheikh<br>Joint Secretary (Economic Diplomacy)<br>Smt. Uma Sekhar<br>Additional Secretary (Legal and Treaties)<br>Shri George Pothan Poothicote<br>Legal Consultant<br>MINISTRY OF EXTERNAL AFFAIRS<br><br>Mr. Anand S. Pathak<br>Mr. Nabik Syam<br>Ms. Ramya Raman<br>Mr. Surya Kapoor<br>Ms. Shyra Hoon<br>Mr. Nav Dhawan<br>P&A LAW OFFICES<br>(New Delhi, India)<br><br>Dr. Markus Burgstaller<br>Mr. Matthew Knowles<br>Mr. Scott Macpherson<br>Ms. Iris Sauvagnac<br>Mr. Dmytro Galagan<br>HOGAN LOVELLS INTERNATIONAL LLP<br>(London, United Kingdom)',
+    'tribunal-composition': 'President<br>Jones, D.<br>Arbitrator<br>Appointed by claimant<br>Blanch, J.<br>Arbitrator<br>Appointed by/designated to respondent<br>Sikri, A. K.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>None - all claims dismissed at the merits stage',
+    'summary': 'GPIX LLC instituted these arbitral proceedings against the Republic of India by Notice of Arbitration dated 9 March 2020 pursuant to Article 8 of the Agreement between India and Mauritius for the Promotion and Protection of Investments dated 4 September 1998 and the 1976 UNCITRAL Arbitration Rules. The PCA serves as Registry in this arbitration.',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Data Not Available',
+    'other-documents': 'Data Not Available',
+    'background-scores': '<a href="https://globalarbitrationreview.com/india-fights-airport-services-claim" target="_blank" rel="noopener noreferrer">https://globalarbitrationreview.com/india-fights-airport-services-claim</a>'
+  },
+  'Maxis and Global Communications v. India': {
+    'case-name': 'Maxis and Global Communications v. India',
+    'full-case-name': 'Maxis Communications Berhad and Global Communications Services Holdings Limited v. Republic of India',
+    'case-number': 'PCA Case No. 2021-38',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2021',
+    'seat-of-arbitration': 'United Kingdom',
+    'industries': 'Telecommunication, Wireless communication activities',
+    'status-of-case': 'Pending',
+    'claimant-country': 'Malaysia , Mauritius',
+    'applicable-treaties': 'India - Malaysia BIT (1995)<br>India - Mauritius BIT (1998)',
+    'administering-institution': 'Permanent Court of Arbitration',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Mr. Toby Landau KC<br>Duxton Hill Chambers<br><br>Mr. Lucas Bastin KC<br>Ms. Jackie McArthur<br>Ms. Naomi Hart<br>Ms. Gretta Schumacher<br>Essex Court Chambers<br><br>Ms. Zahra Al-Rikabi<br>Brick Court Chambers<br><br>Ms. Courtney Grafton<br>Twenty Essex<br><br>Mr. Peh Aik Hin<br>Ms. Chua Xinying<br>Ms. Rebecca Chia<br>Ms. Abigail Fernandez<br>Allen & Gledhill LLP<br><br>Mr. Vyapak Desai<br>Mr. Alipak Banerjee<br>Nishith Desai Associates',
+    'parties-respondent': 'Mr. Gulzar Natarajan, Additional Secretary (T)<br>Mr. Ashok Kumar Jain, Deputy Director General (IP)<br>Mr. Alok Ranjan, Director (IP)<br>Mr. Amit Upadhayay, Under Secretary (IP)<br>Department of Telecommunication<br>Ministry of Communications<br>Government of India<br><br>H.E. Mr. Kumar Tuhin, Ambassador of India to the Kingdom of the Netherlands<br>Ms. K.C. Sowmya, Counsellor (Legal) Embassy of India, The Hague<br>Embassy of India<br>The Hague, The Netherlands<br><br>Mr. Abhishek Singh, Joint Secretary<br>Ms. Manisha Swami, Director<br>Ms. Sindhu Acharya, Consultant (Legal)<br>Mr. Noble Robinson, Consultant (legal) <br>Ministry of External Affairs<br>Government of India<br><br>Ms. Reetu Jain, Economic Adviser<br>Mr. Dhruv Chakravarty, Director<br>Ms. Trishla Singh, Assistant Director<br>Mr. Arpit Mallick, Legal Consultant<br>Department of Economic Affairs<br>Ministry of Finance<br>Government of India<br><br>Dr. Rajiv Mani, Law Secretary<br>Dr. R J R Kasibhatla, Additional Legal Adviser <br>Department of Legal Affairs<br>Ministry of Law and Justice<br>Government of India<br><br>Dr. Constantinos Salonidis<br>Ms. Christina Beharry<br>Mr. Lawrence H. Martin<br>Mr. Sudhanshu Roy<br>Ms. Katherine Peiffer<br>Ms. Ivana Mariles Toledo<br>Ms. Rumbidzai Maweni<br>Mr. Pablo Nilo Donoso<br>Foley Hoag LLP<br>Washington, D.C.<br><br>Mr. Daniel Schimmel<br>Ms. Eva Paloma Treves<br>Foley Hoag LLP<br>New York<br><br>Mr. Suhaan Mukerji<br>Ms. Chitralekha Das<br>Mr. Harsh Hiroo Gursahani<br>Mr. Jibran Khan<br>Mr. Sayandeep Pahari<br>PLR Chambers<br>New Delhi',
+    'tribunal-composition': 'President<br>Mance, J.<br>Arbitrator<br>Appointed by claimant<br>King, B. D.<br>Arbitrator<br>Appointed by/designated to respondent<br>Douglas, Z.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'The PCA provides administrative support in this arbitration, which is being conducted under the Agreement between the Government of the Republic of India and the Government of Malaysia for the Promotion and Protection of Investment which entered into force on 12 April 1997, the Agreement between the Government of the Republic of India and the and the Republic of Mauritius for the Promotion and Protection of Investment which entered into force on 20 June 2020, and the Arbitration Rules of the United Nations Commission on International Trade Law, 1976.',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Data Not Available',
+    'other-documents': 'Data Not Available',
+    'background-scores': '<a href="https://www.iareporter.com/arbitration-cases/maxis-communications-global-communication-services-v-india/" target="_blank" rel="noopener noreferrer">https://www.iareporter.com/arbitration-cases/maxis-communications-global-communication-services-v-india/</a>'
+  },
+  'Kowepo v. India': {
+    'case-name': 'Kowepo v. India',
+    'full-case-name': 'Korea Western Power Company Limited v. India',
+    'case-number': 'PCA Case No. 2020-06',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '29 Nov 2019',
+    'seat-of-arbitration': 'Singapore',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Pending',
+    'claimant-country': 'South Korea',
+    'applicable-treaties': 'India - Korea, Republic of BIT (1996)<br>India - Korea, Republic of CEPA (2009)',
+    'administering-institution': 'Permanent Court of Arbitration',
+    'state-gov-involved': 'Maharashtra',
+    'parties-claimant': 'Mr. Doo-Sik Kim<br>Mr. Jae Min Jeon<br>Mr. Youngwon Yoon<br>Mr. Rockey Yoo<br>Mr. Arie Eernisse<br>Mr. Jae Hee Kim<br>Mr. Jung Hoon Yang<br>Shin & Kim<br><br>Dr. Rishab Gupta<br>Twenty Essex<br><br>Ms. Shreya Jain<br>Shardul Amarchand Mangaldas & Co.',
+    'parties-respondent': 'Mr. Anand S. Pathak<br>Mr. Nabik Syam<br>Ms. Ramya Raman<br>Mr. Surya Kapoor<br>Ms. Shyra Hoon<br>Mr. Nav Dhawan<br>P&A LAW OFFICES<br>(New Delhi, India)<br><br>Mr. Dany Khayat<br>Mr. José Caicedo<br>Mr. William Ahern<br>Ms. Joy Kreidi<br>Mr. Bastien Tirel<br>Mr. Aslan Boucobza<br>Mayer Brown',
+    'tribunal-composition': 'President<br>Kalicki, J. E.<br>Arbitrator<br>Appointed by claimant<br>Stern, B.<br>Arbitrator<br>Appointed by/designated to respondent<br>Hobér, K.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'Details of investment<br>Shareholding of 40% in Pioneer Gas Power Plant Limited (PGPL), the operator of a 388 MW project in the Raigad district in the Indian state of Maharashtra.<br>Summary of the dispute: Data Not Given.',
+    'amount-of-compensation': 'Claimed by investor<br>400.00 mln USD<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Data Not Available',
+    'other-documents': 'Data Not Available',
+    'background-scores': '<a href="https://globalarbitrationreview.com/article/1175971/korean-investor-threatens-treaty-claim-against-india" target="_blank" rel="noopener noreferrer">https://globalarbitrationreview.com/article/1175971/korean-investor-threatens-treaty-claim-against-india</a>'
+  },
+  'Carissa v. India': {
+    'case-name': 'Carissa v. India',
+    'full-case-name': 'Carissa Investments LLC v. India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2017',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Real Estate',
+    'status-of-case': 'Withdrawn',
+    'claimant-country': 'Mauritius',
+    'applicable-treaties': 'India - Mauritius BIT (1998)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Telangana',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'President<br>McLachlan, C. A.<br>Arbitrator<br>Appointed by claimant<br>Hobér, K.<br>Arbitrator<br>Appointed by/designated to respondent<br>Douglas, Z.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Data Not Available',
+    'amount-of-compensation': 'Claimed by investor<br>50.00 mln USD<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Data Not Available',
+    'other-documents': 'Data Not Available',
+    'background-scores': '<a href="https://globalarbitrationreview.com/article/1159323/treaty-claims-against-india-get-under-way" target="_blank" rel="noopener noreferrer">https://globalarbitrationreview.com/article/1159323/treaty-claims-against-india-get-under-way</a>'
+  },
+  'Nissan v. India': {
+    'case-name': 'Nissan v. India',
+    'full-case-name': 'Nissan Motor Co., Ltd. v. Republic of India',
+    'case-number': 'PCA Case No. 2017-37',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 2013',
+    'respondent-field': 'India',
+    'date-of-introduction': '23 Feb 2017',
+    'seat-of-arbitration': 'Singapore',
+    'industries': 'Automotive, Manufacturing of automotive',
+    'status-of-case': 'Settled',
+    'claimant-country': 'Japan',
+    'applicable-treaties': 'India - Japan EPA (2011)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'Tamil Nadu',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'President<br>Kalicki, J. E.<br>Arbitrator<br>Appointed by claimant<br>Hobér, K.<br>Arbitrator<br>Appointed by/designated to respondent<br>Khehar, J. S.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Umbrella clause<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>70 per cent share in Renault Nissan Automotive India Private Limited, a consortium that built an industrial automotive facility in Chennai, the capital of Tamil Nadu.<br>Summary of the dispute<br>Claims arising out of non-payment of incentives by the Indian State government of Tamil Nadu, which had been allegedly promised to the claimant under the agreement for building of a car plant, signed with the State government in 2008.',
+    'amount-of-compensation': 'Claimed by investor<br>660.00 mln USD<br>Awarded through settlement<br>Data not available',
+    'latest-documents': 'Decision on Jurisdiction',
+    'other-documents': 'Judgment of the High Court of Singapore [2019] SGHC 249 - 18 Oct 2019',
+    'background-scores': '<a href="http://globalarbitrationreview.com/article/1151303/nissan-brings-claims-against-india" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/article/1151303/nissan-brings-claims-against-india</a>'
+  },
+  'Vodafone v. India (II)': {
+    'case-name': 'Vodafone v. India (II)',
+    'full-case-name': 'Vodafone Group Plc and Vodafone Consolidated Holdings Limited v. India (II)',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '24 Jan 2017',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Telecommunication, Waste management',
+    'status-of-case': 'Pending',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Maharastra',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'President<br>McLachlan, C. A.<br>Arbitrator<br>Appointed by claimant<br>Kaplan, N.<br>Arbitrator<br>Appointed by/designated to respondent<br>Kohen, M. G.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'Details of investment<br>Ownership of an Indian telecoms company.<br>Summary of the dispute<br>Claims arising out of a retrospective transaction tax imposed by the Government over claimants\' acquisition of Indian-based Hutchison Whampoa telecoms business.',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Judgment of the High Court of Delhi - 7 May 2018',
+    'other-documents': 'Order of the High Court of Delhi - 26 Oct 2017.<br>Judgment of the High Court of Delhi - 22 Aug 2017.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/article/1141795/vodafone-files-second-tax-claim-against-india" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/article/1141795/vodafone-files-second-tax-claim-against-india</a>'
+  },
+  'Astro and South Asia Entertainment v. India': {
+    'case-name': 'Astro and South Asia Entertainment v. India',
+    'full-case-name': 'Astro All Asia Networks and South Asia Entertainment Holdings Limited v. India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': 'Data Not Available.',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Information and communication, Telecommunication',
+    'status-of-case': 'Discontinued',
+    'claimant-country': 'United Kingdom<br>Mauritius',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)<br>India - Mauritius BIT (1998)',
+    'administering-institution': 'Data Not Available.',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Arbitrator<br>Appointed by claimant<br>Leaver, P.<br>President<br>Moser, M. J.<br>Arbitrator<br>Appointed by/designated to respondent<br>Reed, L.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Investment in the Indian satellite TV company Sun Direct.<br>Summary of the dispute<br>Claims arising out of an allegedly unfair and biased criminal investigation by the Government relating to the suspected bribery by the claimants of Indian government officials.',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Data Not Available.',
+    'other-documents': 'Data Not Available.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/article/1034835/astro-threatens-claims-over-indian-prosecution" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/article/1034835/astro-threatens-claims-over-indian-prosecution</a>'
+  },
+  'RAKIA v. India': {
+    'case-name': 'RAKIA v. India',
+    'full-case-name': 'Ras-AI-Khaimah Investment Authority v. India',
+    'case-number': 'Data Not Available.',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '8 Dec 2016',
+    'seat-of-arbitration': 'London',
+    'industries': 'Metal, Manufacturing of basic metals',
+    'status-of-case': 'Decided in favor of State',
+    'claimant-country': 'United Arab Emirates',
+    'applicable-treaties': 'India - United Arab Emirates BIT (2013)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Andhra Pradesh',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'President<br>Hoffmann, L.<br>Arbitrator<br>Appointed by claimant<br>Rowley, J. W.<br>Arbitrator<br>Appointed by/designated to respondent<br>Prasad, C. K.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>None - jurisdiction declined',
+    'summary': 'Details of investment<br>Shareholding in ANRAK Aluminium Ltd ("ANRAK"), an Indian company incorporated to establish and operate an alumina and aluminium refinery and smelter in the state of Andhra Pradesh in South India.<br>Summary of the dispute<br>Claims arising out of the alleged non-fulfillment and subsequent cancellation of a memorandum of understanding signed in 2007 between the Government of the Indian state of Andhra Pradesh and the claimant. In the memorandum, the state government agreed to direct a state-owned mining company to supply bauxite to ANRAK, a company in the claimant held shares, in order for ANRAK to operate an alumina and aluminium refinery and smelter.',
+    'amount-of-compensation': 'Claimed by investor<br>44.71 mln USD<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Judgment of the High Court of Justice of England and Wales [2025] EWHC 1553 - 20 June 2025',
+    'other-documents': 'Minutes of the Meeting of the Indian Inter-Ministerial Group on the Notice of Arbitration',
+    'background-scores': '<a href="http://globalarbitrationreview.com/article/1080042/uae-investment-authority-takes-on-india" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/article/1080042/uae-investment-authority-takes-on-india</a>'
+  },
+  'Vedanta v. India (I)': {
+    'case-name': 'Vedanta v. India (I)',
+    'full-case-name': 'Vedanta Resources PLC v. The Republic of India (I)',
+    'case-number': 'PCA Case No. 2016-05',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2016',
+    'seat-of-arbitration': 'Singapore',
+    'industries': 'Oil & Gas, Exploration, extraction and production (upstream)',
+    'status-of-case': 'Settled',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'Orrisa',
+    'parties-claimant': 'Ms. Marie Stoyanov (from 22 May 2025)<br><br>Mr. Igor Kirillov (from 22 May 2025)<br><br>Allen Overy Shearman Sterling LLP (Paris)<br><br>Ms. Sheila Ahuja KC (from 22 May 2025)<br><br>Mr. Amrutanshu Dash (from 22 May 2025)<br><br>Allen Overy Shearman Sterling LLP (Singapore)<br><br>Mr. Arun Mal (from 22 May 2025)<br><br>Mr. Sahil Malhotra (from 22 May 2025)<br><br>Allen Overy Shearman Sterling LLP (London)<br><br>Mr. Curtis Fung (from 22 May 2025)<br><br>Allen Overy Shearman Sterling (Hong Kong SAR)<br><br>Mr. Sanjeev Kapoor<br>Ms. Saman Ahsan<br>Khaitan & Co<br><br>Ms. Faith Gay (until 11 February 2025)<br>Mr. Rajat Rana (until 11 February 2025)<br>Mr. Manuel Valderrama (until 11 February 2025)<br>Mr. Joshua W. Bean (until 11 February 2025)<br>Selendy Gay PLLC (until 11 February 2025)',
+    'parties-respondent': 'Mr. Atul Sharma<br>Mr. Shravan Yammanur<br>Mr. Mangesh Krishna<br>Ms. Prachi Kaushik<br>Dentons Link Legal<br><br>Mr. James Langley<br>Ms. Catherine Gilfedder<br>Dr. Lorna MacFarlane<br>Ms. Olivia Lee-Smith<br>Dentons UK and Middle East LLP',
+    'tribunal-composition': 'President<br>Hwang, M.<br>Arbitrator<br>Appointed by claimant<br>Spigelman, J.<br>Arbitrator<br>Appointed by/designated to respondent<br>McRae, D. M.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>59.9% shareholding in Cairn India Limited, one of the largest oil and gas exploration companies in India.<br>Summary of the dispute<br>Claims arising out of a tax bill of approximately USD 3.29 billion, imposed by the Government on Cairn India Limited in 2015, for the alleged failure to pay taxes on capital gains arising from Cairn’s operations in 2006-2007.',
+    'amount-of-compensation': 'Claimed by investor<br>3000.00 mln USD<br>Awarded through settlement<br>Data not available',
+    'latest-documents': 'Judgment of the Court of Appeal of Singapore [2021] SGCA 50 - 12 May 2021',
+    'other-documents': 'Judgment of the High Court of Singapore [2020] SGHC 208 - 8 Oct 2020<br>Press Release of Vedanta Resources on Notice of Claim Under Bilateral Investment Treaty - 27 Mar 2015<br>Press Release of Vedanta Resources on Settlement of the Arbitration - 13 Dec 2021',
+    'background-scores': '<a href="http://globalarbitrationreview.com/article/1067559/panels-in-place-for-indian-back-tax-disputes" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/article/1067559/panels-in-place-for-indian-back-tax-disputes</a>'
+  },
+  'Cairn v. India': {
+    'case-name': 'Cairn v. India',
+    'full-case-name': 'Cairn Energy PLC and Cairn UK Holdings Limited v. The Republic of India',
+    'case-number': 'PCA Case No. 2016-7',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '22 Dec 2015',
+    'seat-of-arbitration': 'The Hague',
+    'industries': 'Oil & Gas, Exploration, extraction and production (upstream)',
+    'status-of-case': 'Decided in favor of investor',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Quinn Emanuel Urquhart & Sullivan LLP<br>Shepherd and Wedderburn LLP<br>Mr. Arvind Datar SA<br>S&R Associates<br>Platinum Partners',
+    'parties-respondent': 'Aarna Law<br>Mr. Salim Moollan QC<br>Mr. Gourab Banerji SA<br>Professor Chester Brown',
+    'tribunal-composition': 'President<br>Lévy, L.<br>Arbitrator<br>Appointed by claimant<br>Alexandrov, S. A.<br>Arbitrator<br>Appointed by/designated to respondent<br>Thomas, J. C.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Direct expropriation<br><br>Indirect expropriation<br><br>Transfer of funds<br>IIA breaches found<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Direct expropriation<br><br>Indirect expropriation<br><br>Transfer of funds',
+    'summary': 'Details of investment<br>Interests in subsidiary Cairn UK Holdings Limited and 10 per cent shareholding in Cairn India Limited (CIL), one of the largest oil and gas exploration companies in India.<br>Summary of the dispute<br>Claims arising out of a draft assessment order issued by the Indian Income Tax Department addressed to the claimant’s subsidiary, Cairn UK Holdings Limited, in respect of fiscal year 2006/7 in the amount of USD 1.6 billion plus any applicable interest and penalties; and the alleged prohibition for the claimant to sell its 10 per cent shareholding in Cairn India Limited.',
+    'amount-of-compensation': 'Claimed by investor<br>5584.39 mln USD<br>Awarded by tribunal<br>1232.82 mln USD',
+    'latest-documents': 'Judgment of the Hague Court of Appeal - 21 Dec 2021',
+    'other-documents': 'Decision of India\'s Income Tax Appellate Tribunal - 9 Mar 2017<br>Procedural Order No. 4 (Decision on the Respondent’s Application for Bifurcation) - 19 Apr 2017<br>Judgment of the High Court of Singapore - 8 Oct 2020<br>Final Award - 21 Dec 2020',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/33927/india-says-no-cairn-tax-arbitration" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/33927/india-says-no-cairn-tax-arbitration</a>'
+  },
+  'LDA v. India': {
+    'case-name': 'LDA v. India',
+    'full-case-name': 'Louis Dreyfus Armateurs SAS v. The Republic of India',
+    'case-number': 'PCA Case No. 2014-26',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '31 Mar 2014',
+    'seat-of-arbitration': 'London',
+    'industries': 'Land Transportation, Logistics & Storage, Warehousing and support activities for transportation',
+    'status-of-case': 'Decided in favor of State',
+    'claimant-country': 'France',
+    'applicable-treaties': 'France - India BIT (1997)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'West Bengal',
+    'parties-claimant': 'Professor Vaughan Lowe QC<br>ESSEX COURT CHAMBERS<br>(London, United Kingdom)<br><br>Dr. Tariq Baloch<br>3 VERULAM BUILDINGS, GRAY’S INN<br>(London, United Kingdom)<br><br>Mr. Farhad Sorabjee<br>Mr. Varghese Thomas <br>Ms. Arti Raghavan <br>Ms. Shanaya Irani <br>Ms. Neeraja Balakrishnan <br>J. SAGAR ASSOCIATES <br>(Mumbai, India)',
+    'parties-respondent': 'Mr. Mark A. Clodfelter<br>Dr. Constantinos Salonidis<br>Mrs. Diana Tsutieva<br>Ms. Oonagh Sands<br>Mr. Ofilio Mayorga<br>Mr. Joseph Klingler<br>FOLEY HOAG LLP (Washington D.C., U.S.A.)<br>Mr. Thomas Bevilacqua<br>Dr. Alejandra Torres Camprubi<br>Mr. Antoine Lerosier<br>FOLEY HOAG AARPI (Paris, France)',
+    'tribunal-composition': 'President<br>Kalicki, J. E.<br>Arbitrator<br>Appointed by claimant<br>Lew, J. D. M.<br>Arbitrator<br>Appointed by/designated to respondent<br>Thomas, J. C.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Full protection and security, or similar<br>IIA breaches found<br>None - all claims dismissed at the merits stage',
+    'summary': 'Details of investment<br>Shareholding in a joint venture with Indian port operator ABG Infralogistics to implement a project aimed at the mechanisation of berths at Haldia in West Bengal.<br>Summary of the dispute<br>Claims arising out of a series of measures by the Indian Government that allegedly prevented the effective implementation of a joint venture related to a port modernization project at Haldia, in the city of Kolkota, in which the claimant held stakes; including allegedly failing to provide protection and security to the project, and to obey court orders concerning the removal of equipment from the port.',
+    'amount-of-compensation': 'Claimed by investor<br>36.00 mln USD<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Award - 11 Sept 2018',
+    'other-documents': 'Decision on Jurisdiction - 22 Dec 2015',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/32612/india-faces-treaty-claim-port-project" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/32612/india-faces-treaty-claim-port-project</a>'
+  },
+    'Vodafone v. India (I)': {
+    'case-name': 'Vodafone v. India (I)',
+    'full-case-name': 'Vodafone International Holdings BV v. India (I)',
+    'case-number': 'PCA Case No. 2016-35',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '17 Apr 2014',
+    'seat-of-arbitration': 'Singapore',
+    'industries': 'Telecommunication, Wired communication activities',
+    'status-of-case': 'Decided in favor of investor',
+    'claimant-country': 'Netherlands',
+    'applicable-treaties': 'India - Netherlands BIT (1995)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Mr. Harish Salve, Senior Counsel',
+    'parties-respondent': 'MR. SANJAY JAIN, SENIOR COUNSEL',
+    'tribunal-composition': 'Arbitrator<br>Appointed by claimant<br>Fortier, L. Y.<br>Arbitrator<br>Appointed by/designated to respondent<br>Lahoti, R. C. (replaced)<br>Arbitrator<br>Appointed by/designated to respondent<br>Oreamuno Blanco, R.<br>President<br>Berman, F.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br>IIA breaches found<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims',
+    'summary': 'Details of investment<br>Ownership of an Indian telecoms company.<br>Summary of the dispute<br>Claims arising out of a retrospective transaction tax imposed by the Government over claimant\'s acquisition of Indian-based Hutchison Whampoa telecoms business.',
+    'amount-of-compensation': 'Claimed by investor<br>Data not available<br>Awarded by tribunal<br>Non-pecuniary relief',
+    'latest-documents': 'Final Award (Operative Part) - 25 Sept 2020',
+    'other-documents': 'Judgment of the High Court of Delhi Restraining the Claimant from Proceeding with Its Arbitration Claim - 22 Aug 2017<br>Order of the High Court of Delhi - 26 Oct 2017<br>Indian Supreme Court Order - 14 Dec 2017<br>Judgment of the High Court of Delhi Vacating Order - 7 May 2018',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/32635/vodafone-india-arbitration-on/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/32635/vodafone-india-arbitration-on/</a>'
+  },
+  'Deutsche Telekom v. India': {
+    'case-name': 'Deutsche Telekom v. India',
+    'full-case-name': 'Deutsche Telekom AG v. The Republic of India',
+    'case-number': 'PCA Case No. 2014-10',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2 Sept 2013',
+    'seat-of-arbitration': 'Geneva',
+    'industries': 'Telecommunication, Wireless communication activities',
+    'status-of-case': 'Decided in favor of investor',
+    'claimant-country': 'Germany',
+    'applicable-treaties': 'Germany - India BIT (1995)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'James H. Boykin Shayda Vance Malik Havali (Hughes Hubbard & Reed)',
+    'parties-respondent': 'Nicolle Kownacki (Whitecase)',
+    'tribunal-composition': 'President<br>Kaufmann-Kohler, G.<br>Arbitrator<br>Appointed by claimant<br>Price, D. M.<br>Arbitrator<br>Appointed by/designated to respondent<br>Stern, B.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Full protection and security, or similar<br><br>Direct expropriation<br><br>Indirect expropriation<br>IIA breaches found<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims',
+    'summary': 'Details of investment<br>Indirect shareholding (20 per cent stake via a Singaporean subsidiary) in the Indian company Devas Multimedia, that had concluded contracts with Antrix -related to the Indian Space Research Organisation- for the launch and operation of two satellites.<br>Summary of the dispute<br>Claims arising out of the Government\'s cancellation of a contract concluded with Devas, a company in which the claimant held interests, concerning the provision of broadband services to Indian consumers.',
+    'amount-of-compensation': 'Claimed by investor<br>270.00 mln USD<br>Awarded by tribunal<br>93.30 mln USD',
+    'latest-documents': 'Petitioner’s Memorandum of Points and Authorities in Opposition to Respondent’s Motion To Stay Enforcement and Post-Judgment Discovery Pending Appeal - 22 Aug 2024',
+    'other-documents': 'Interim Award - 13 Dec 2017<br>Decision of the Swiss Federal Tribunal 4A_65/2018 - 11 Dec 2018<br>Final Award - 27 May 2020<br>Exequatur Order of the Civil Court of Geneva - 20 Aug 2020<br>...and many other documents, including a final link:<br><a href="https://jusmundi.com/en/document/pdf/other/en-deutsche-telekom-ag-v-the-republic-of-india-statement-of-points-and-authorities-in-support-of-the-republic-of-indias-motion-to-stay-enforcement-and-post-judgment-discovery-pending-appeal-thursday-8th-august-2024" target="_blank" rel="noopener noreferrer">https://jusmundi.com/en/document/pdf/other/en-deutsche-telekom-ag-v-the-republic-of-india-statement-of-points-and-authorities-in-support-of-the-republic-of-indias-motion-to-stay-enforcement-and-post-judgment-discovery-pending-appeal-thursday-8th-august-2024</a>',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/32004/new-satellite-claim-launches-against-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/32004/new-satellite-claim-launches-against-india/</a>'
+  },
+  'KHML v. India': {
+    'case-name': 'KHML v. India',
+    'full-case-name': 'Khaitan Holdings Mauritius Limited v. India',
+    'case-number': 'PCA Case No. 2018-50',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '1 Oct 2013',
+    'seat-of-arbitration': 'The Hague',
+    'industries': 'Telecommunication',
+    'status-of-case': 'Pending',
+    'claimant-country': 'Mauritius',
+    'applicable-treaties': 'India - Mauritius BIT (1998)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Mr. James Lloyd Loftis<br>Ms. Sophie Freelove<br>Ms. Merra Kurubalan<br>Mr. Kartik Rajpal <br>VINSON & ELKINS LLP<br><br>Mr. Mark Beeley<br>Ms. Sarah Stockley<br>Ms. Harriet Foster<br>ORRICK, HERRINGTON & SUTCLIFFE (UK) LLP',
+    'parties-respondent': 'Mr. George Kahale III<br>Mr. Simon Batifort<br>Ms. Lise Johnson<br>Mr. Fuad Zarbiyev<br>Mr. Amrane Medjani<br>Ms. Claudia King<br>Mr. Arthad Kurlekar<br>Ms. Medi Coulson<br>CURTIS, MALLET-PREVOST, COLT & MOSLE LLP<br><br>Ms. R. V. Anuradha<br>Mr. Piyush Joshi<br>Ms. Sumiti Yadava<br>Ms. Vatsla Bhatia<br>Ms. Indumugi C.<br>CLARUS LAW ASSOCIATES',
+    'tribunal-composition': 'Arbitrator<br>Appointed by claimant<br>Xavier, F. (replaced)<br>Arbitrator<br>Appointed by/designated to respondent<br>Stern, B.<br>President<br>McLachlan, C. A.<br>Arbitrator<br>Appointed by claimant<br>Rowley, J. W.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Pending',
+    'summary': 'Details of investment<br>Minority shareholding (27 per cent) in Loop Telecom, a telecommunications company that held twenty one 2G licences in India.<br>Summary of the dispute<br>Claims arising out of the cancellation by India\'s Supreme Court of a telecoms licence held by a company in which the claimant had invested, and its reassignment through a public auction process.',
+    'amount-of-compensation': 'Claimed by investor<br>1400.00 mln USD<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Judgment of the Hague District Court - 25 Jan 2023',
+    'other-documents': 'Order of the Delhi High Court - 25 Jan 2019<br>Order of the Delhi High Court - 29 Jan 2019',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/32442/india-telecoms-claim-gets-under-hague/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/32442/india-telecoms-claim-gets-under-hague/</a>'
+  },
+  'Devas v. India (I)': {
+    'case-name': 'Devas v. India (I)',
+    'full-case-name': 'CC/Devas (Mauritius) Ltd., Devas Employees Mauritius Private Limited, and Telcom Devas Mauritius Limited v. Republic of India (I)',
+    'case-number': 'PCA Case No. 2013-09',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '3 July 2012',
+    'seat-of-arbitration': 'The Hague',
+    'industries': 'Telecommunication, Wireless communication activities',
+    'status-of-case': 'Decided in favor of investor',
+    'claimant-country': 'Mauritius',
+    'applicable-treaties': 'India - Mauritius BIT (1998)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Mr. John L. Gardiner<br>Mr. Timothy G. Nelson<br>Ms. Betsy A. Hellmann<br>SKADDEN, ARPS, SLATE, MEAGHER & FLOM LLP <br><br>Mr. David Kavanagh<br>SKADDEN, ARPS, SLATE, MEAGHER & FLOM (UK) LLP',
+    'parties-respondent': 'Mr. George Kahale III<br>Mr. Benard V. Preziosi, Jr.<br>CURTIS, MALLET-PREVOST, COLT & MOSLE LLP',
+    'tribunal-composition': 'President<br>Lalonde, M.<br>Arbitrator<br>Appointed by claimant<br>Haigh, D.<br>Arbitrator<br>Appointed by claimant<br>Orrego Vicuña, F. (replaced)<br>Arbitrator<br>Appointed by/designated to respondent<br>Singh, A. D.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Indirect expropriation<br><br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Most-favoured nation treatment<br><br>Arbitrary, unreasonable and/or discriminatory measures<br><br>Transfer of funds<br>IIA breaches found<br>Indirect expropriation<br><br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims',
+    'summary': 'Details of investment<br>Shareholding in Devas Multimedia Private Limited, an Indian company that had concluded a telecommunication contract with an Indian state entity under the control of the Indian Space Research Organization.<br>Summary of the dispute<br>Claims arising out of the alleged Government\'s cancellation of an agreement to lease capacity in the S-Band, part of the electromagnetic spectrum, for claimants\' subsidiary to launch two satellites to provide multimedia services to mobile users across India.',
+    'amount-of-compensation': 'Claimed by investor<br>580.00 mln USD<br>Awarded by tribunal<br>111.30 mln USD',
+    'latest-documents': 'Decision on Consequential Matters of the High Court of Justice of England and Wales [2025] EWHC 1189 - 16 May 2025',
+    'other-documents': 'Notice of Arbitration<br>Claimants’ Statement of Claim<br>Decision on the Respondent\'s Challenge to the Hon. Marc Lalonde and Prof. Francisco Orrego Vicuña<br>Respondent’s Statement of Defence<br>Award on Jurisdiction and Merits<br>...and many more.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/31522/panel-formed-billion-dollar-bit-claim-against-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/31522/panel-formed-billion-dollar-bit-claim-against-india/</a>'
+  },
+  'Naumchenko and others v. India': {
+    'case-name': 'Naumchenko and others v. India',
+    'full-case-name': 'Maxim Naumchenko, Andrey Poluektov and Tenoch Holdings Limited v. The Republic of India',
+    'case-number': 'PCA Case No. 2013-23',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2012',
+    'seat-of-arbitration': 'The Hague',
+    'industries': 'Telecommunication, Wireless communication activities',
+    'status-of-case': 'Decided in favor of State',
+    'claimant-country': 'Russian Federation<br>Cyprus',
+    'applicable-treaties': 'India - Russian Federation BIT (1994)<br>Cyprus - India BIT (2002)',
+    'administering-institution': 'PCA (Permanent Court of Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Mr. Gaëtan Verhoosel<br>Mr. Luke Sobota<br>THREE CROWNS LLP',
+    'parties-respondent': 'Mr. George Kahale III<br>Mr. Benard V. Preziosi, Jr.<br>Mr. Kabir Duggal<br>Mr. Fuad Zarbiyev<br>Mr. Fernando Tupa<br>CURTIS, MALLET-PREVOST, COLT & MOSLE LLP',
+    'tribunal-composition': 'Sepúlveda Amor, B.<br>Arbitrator<br>Appointed by claimant<br>Brower, C. N.<br>Arbitrator<br>Appointed by/designated to respondent<br>Stern, B.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Arbitrary, unreasonable and/or discriminatory measures<br>IIA breaches found<br>None - all claims dismissed at the merits stage',
+    'summary': 'Details of investment<br>Majority shareholding in the Indian telecoms company ByCell India.<br>Summary of the dispute<br>Claims arising out of the withdrawal by Indian authorities of an approval to grant frequency allocation licences to claimants\' local telecoms company ByCell, after it had previously obtained clearance from India\'s Foreign Investment Board.',
+    'amount-of-compensation': 'Claimed by investor<br>400.00 mln USD<br>Awarded by tribunal<br>Data not available',
+    'latest-documents': 'Press Release of the Indian Ministry of Finance on Dismissal of BIT Claims - 20 Jan 2020',
+    'other-documents': 'Data Not Available.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/30698/another-claim-looms-2g-licences-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/30698/another-claim-looms-2g-licences-india/</a>'
+  },
+    'White Industries v. India': {
+    'case-name': 'White Industries v. India',
+    'full-case-name': 'White Industries Australia Limited v. The Republic of India',
+    'case-number': 'Data Not Available.',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2010',
+    'seat-of-arbitration': 'London',
+    'industries': 'Mining, Coal and lignite',
+    'status-of-case': 'Decided in favor of State',
+    'claimant-country': 'Australia',
+    'applicable-treaties': 'Australia - India BIT (1999)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'President<br>Rowley, J. W.<br>Arbitrator<br>Appointed by claimant<br>Brower, C. N.<br>Arbitrator<br>Appointed by/designated to respondent<br>Lau, C.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Indirect expropriation<br><br>Fair and equitable treatment/Minimum standard of treatment, including denial of justice claims<br><br>Most-favoured nation treatment<br><br>Transfer of funds<br><br>Other<br>IIA breaches found<br>Most-favoured nation treatment<br><br>Other',
+    'summary': 'Details of investment<br>Rights under certain contract concluded with a State-owned mining company, a bank guarantee and an ICC award rendered in White Industries\' favour.<br>Summary of the dispute<br>Claims arising out of alleged judicial delays by the Government of India that left the claimant unable to enforce an ICC award for over nine years concerning a contractual dispute with Coal India, a State-owned mining entity.',
+    'amount-of-compensation': 'Claimed by investor<br>8.70 mln AUD (8.80 mln USD)<br>Awarded by tribunal<br>4.10 mln AUD (4.10 mln USD)',
+    'latest-documents': 'Final Award',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/news/article/30167/logjam-indian-courts-triggers-bit-breach/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/news/article/30167/logjam-indian-courts-triggers-bit-breach/</a>'
+  },
+  'ABN Amro v. India': {
+    'case-name': 'ABN Amro v. India',
+    'full-case-name': 'ABN Amro N.V. v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'Netherlands',
+    'applicable-treaties': 'India - Netherlands BIT (1995)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Schreuer, C. H.<br>Unknown<br>Greenwood, C.<br>President<br>Name not available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'ANZEF v. India': {
+    'case-name': 'ANZEF v. India',
+    'full-case-name': 'ANZEF Ltd. v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Schreuer, C. H.<br>Unknown<br>Greenwood, C.<br>President<br>Name not available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'BNP Paribas v. India': {
+    'case-name': 'BNP Paribas v. India',
+    'full-case-name': 'BNP Paribas v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'France',
+    'applicable-treaties': 'India - France BIT (1997)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Maharashtra',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Schreuer, C. H.<br>Unknown<br>Greenwood, C.<br>President<br>Name not available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'Credit Lyonnais v. India': {
+    'case-name': 'Credit Lyonnais v. India',
+    'full-case-name': 'Credit Lyonnais S.A. (now Calyon S.A.) v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'France',
+    'applicable-treaties': 'France - India BIT (1997)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Schreuer, C. H.<br>Unknown<br>Greenwood, C.',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+    'Credit Suisse v. India': {
+    'case-name': 'Credit Suisse v. India',
+    'full-case-name': 'Credit Suisse First Boston v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'Switzerland',
+    'applicable-treaties': 'India - Switzerland BIT (1997)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'N/A',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Schreuer, C. H.<br>Unknown<br>Greenwood, C.<br>President<br>Name not available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'Erste Bank v. India': {
+    'case-name': 'Erste Bank v. India',
+    'full-case-name': 'Erste Bank Der Oesterreichischen Sparkassen AG v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'Austria',
+    'applicable-treaties': 'Austria - India BIT (1999)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Maharashtra',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Data Not Available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'Offshore Power v. India': {
+    'case-name': 'Offshore Power v. India',
+    'full-case-name': 'Offshore Power Production C.V., Travamark Two B.V., EFS India-Energy B.V., Enron B.V., and Indian Power Investments B.V. v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'Netherlands',
+    'applicable-treaties': 'India - Netherlands BIT (1995)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Maharashtra',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Lalonde, M.<br>Unknown<br>Cooke, L.<br>President<br>Name not available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Majority shareholding, through subsidiary company, of the Indian Dabhol Power Company.<br>Summary of the dispute<br>Claims arising out of respondent alleged failure to protect claimants\' investment in the Dabhol power plant project in India, which resulted in significant losses to the claimants\' financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>4000.00 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'Standard Chartered Bank v. India': {
+    'case-name': 'Standard Chartered Bank v. India',
+    'full-case-name': 'Standard Chartered Bank v. Republic of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2004',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Energy - Electric Power, Fossil fuel',
+    'status-of-case': 'Settled',
+    'claimant-country': 'United Kingdom',
+    'applicable-treaties': 'India - United Kingdom BIT (1994)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Maharashtra',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Unknown<br>Schreuer, C. H.<br>Unknown<br>Greenwood, C.<br>President<br>Name not available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of respondent\'s alleged failure to protect the investor\'s loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant\'s financing of the failed project.',
+    'amount-of-compensation': 'Claimed by investor<br>42.80 mln USD<br>Awarded through settlement<br>Non-pecuniary relief',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/" target="_blank" rel="noopener noreferrer">http://globalarbitrationreview.com/journal/article/15954/india-arbitration-treaty-protection-india/</a>'
+  },
+  'Bechtel v. India': {
+    'case-name': 'Bechtel v. India',
+    'full-case-name': 'Bechtel Enterprises Holdings, Inc. and GE Structured Finance (GESF) v. The Government of India',
+    'case-number': 'Data Not Available',
+    'nature-of-proceedings': 'International',
+    'type-of-case': 'Investor-State',
+    'rules-of-arbitration': 'UNCITRAL Arbitration Rules 1976',
+    'respondent-field': 'India',
+    'date-of-introduction': '2003',
+    'seat-of-arbitration': 'Data Not Available',
+    'industries': 'Electricity, gas, steam and air conditioning supply',
+    'status-of-case': 'Settled',
+    'claimant-country': 'Mauritius',
+    'applicable-treaties': 'India - Mauritius BIT (1998)',
+    'administering-institution': 'Ad hoc Arbitration (Ad hoc Arbitration)',
+    'state-gov-involved': 'Maharashtra',
+    'parties-claimant': 'Data Not Available',
+    'parties-respondent': 'Data Not Available',
+    'tribunal-composition': 'Data Not Available',
+    'breaches-alleged-found': 'IIA breaches alleged<br>Data not available<br>IIA breaches found<br>Not applicable - settled or discontinued before decision on liability',
+    'summary': 'Details of investment<br>Shareholding in local corporations established to operate the Dabhol power project in the state of Maharashtra, India.<br>Summary of the dispute<br>Claims arising out of an alleged reversal in the energy policy of the local government between the beginning of the power project in which the claimants invested and its intended consummation, as a result of political change in the Government.',
+    'amount-of-compensation': 'Claimed by investor<br>1200.00 mln USD<br>Awarded through settlement<br>160.00 mln USD',
+    'latest-documents': 'Data Not Avaialable.',
+    'other-documents': 'Data Not Avaialable.',
+    'background-scores': '<a href="http://www.iisd.org/itn/wp-content/uploads/2010/10/investment_investsd_may5_2005.pdf" target="_blank" rel="noopener noreferrer">http://www.iisd.org/itn/wp-content/uploads/2010/10/investment_investsd_may5_2005.pdf</a>'
+  }
+};
+// Remove autoLink and hover-link logic
+
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('/session')
+    .then(res => res.json())
+    .then(data => {
+      if (!data.loggedIn) {
+        window.location.href = 'login.html';
+      }
+    });
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.case-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const caseName = link.textContent.trim();
+      if (caseData[caseName]) {
+        for (const [field, value] of Object.entries(caseData[caseName])) {
+          const el = document.getElementById(field);
+          if (el) {
+            el.innerHTML = value;
+          }
+        }
+      } else {
+        // Clear all fields if no data
+        document.querySelectorAll('.accordion-content').forEach(function(el) {
+          el.textContent = '';
+        });
+      }
+      openCaseDetail();
+    });
+  });
+  // Accordion logic
+  document.querySelectorAll('.accordion-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      const content = this.nextElementSibling;
+      const expanded = content.style.maxHeight && content.style.maxHeight !== '0px';
+      document.querySelectorAll('.accordion-content').forEach(function(c) {
+        c.style.maxHeight = null;
+      });
+      if (!expanded) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+  });
+});
+// Close modal on background click
+window.addEventListener('click', function(e) {
+  const modal = document.getElementById('case-detail-modal');
+  if (e.target === modal) closeCaseDetail();
+});
+
+// Add logout functionality
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async function() {
+    await fetch('/logout', { method: 'POST' });
+    window.location.href = 'index.html';
+  });
+}
+
+// PAGINATION LOGIC FOR RESPONDENT CASES TABLE
+const respondentTable = document.querySelector('#respondent .dashboard-table tbody');
+const paginationControls = document.querySelector('.pagination-controls');
+const prevBtn = document.getElementById('prev-page');
+const nextBtn = document.getElementById('next-page');
+const pageNumberSpan = document.getElementById('page-number');
+
+if (respondentTable && paginationControls) {
+  // Collect all rows
+  const allRows = Array.from(respondentTable.querySelectorAll('tr'));
+  const rowsPerPage = 10;
+  let currentPage = 1;
+  const totalPages = Math.ceil(allRows.length / rowsPerPage);
+
+  function showPage(page) {
+    // Hide all rows
+    allRows.forEach(row => row.style.display = 'none');
+    // Show only the rows for the current page
+    const startIdx = (page - 1) * rowsPerPage;
+    const endIdx = startIdx + rowsPerPage;
+    allRows.slice(startIdx, endIdx).forEach(row => row.style.display = '');
+    // Update page number
+    pageNumberSpan.textContent = page;
+    // Disable/enable buttons
+    prevBtn.disabled = page === 1;
+    nextBtn.disabled = page === totalPages;
+  }
+
+  prevBtn.addEventListener('click', function() {
+    if (currentPage > 1) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  });
+  nextBtn.addEventListener('click', function() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      showPage(currentPage);
+    }
+  });
+
+  // Initialize
+  showPage(currentPage);
+}

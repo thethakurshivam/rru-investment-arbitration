@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-left">
+        <img src="assets/RRULogo.png" alt="RRU Logo" class="navbar-logo left-logo">
+        <div class="navbar-title-group">
+          <span class="navbar-title">Rashtriya Raksha University</span>
+          <span class="navbar-tagline">Pioneering National Security and Police University of India</span>
+        </div>
+      </div>
+      <div class="navbar-right">
+        <img src="assets/MHALogo.png" alt="MHA Logo" class="navbar-logo right-logo">
+        <div class="navbar-mha-group">
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="hero-bg-accent"></div>
+  <div class="hero-card" style="max-width: 400px; margin-top: 8vh;">
+    <h2 class="search-heading" style="font-size: 2em; margin-bottom: 24px;">Admin Login</h2>
+    <div class="login-gradient-line"></div>
+    <form>
+      <input type="text" id="username" name="username" placeholder="Username" class="login-input" autocomplete="username" />
+      <input type="password" id="password" name="password" placeholder="Password" class="login-input" autocomplete="current-password" />
+      <div class="login-gradient-line"></div>
+      <button type="submit" class="hero-login-btn" style="width: 100%; margin: 28px 0 0 0;">Login</button>
+      <p id="error-msg" class="error"></p>
+    </form>
+  </div>
+  <footer class="site-footer">
+    © 2025 RRU. All rights reserved.
+  </footer>
+  <script src="js/login.js"></script>
+</body>
+</html>

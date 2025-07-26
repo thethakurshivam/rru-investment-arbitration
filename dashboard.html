@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-left">
+        <img src="assets/RRULogo.png" alt="RRU Logo" class="navbar-logo left-logo">
+        <div class="navbar-title-group">
+          <span class="navbar-title">Rashtriya Raksha University</span>
+          <span class="navbar-tagline">Pioneering National Security and Police University of India</span>
+        </div>
+      </div>
+      <div class="navbar-right">
+        <img src="assets/MHALogo.png" alt="MHA Logo" class="navbar-logo right-logo">
+        <div class="navbar-mha-group">
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="logout-topright">
+    <button id="logout-btn" title="Logout" style="background:none;border:none;cursor:pointer;padding:8px 24px 8px 8px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#003366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    </button>
+  </div>
+  <div class="hero-bg-accent"></div>
+  <div class="dashboard-content">
+    <h1 class="dashboard-title">Welcome to RRU-NSAB Investment Arbitration Cases</h1>
+    <div class="dashboard-gradient-line"></div>
+    <div class="dashboard-btns-simple">
+      <button onclick="showSection('respondent')" class="dashboard-btn">Cases as Respondent State</button>
+      <button onclick="showSection('claimant')" class="dashboard-btn">Cases as Home State of Claimant</button>
+    </div>
+  </div>
+  <div id="respondent" class="table-section">
+    <h2>Cases as Respondent State</h2>
+    <div class="dashboard-table-wrapper">
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>NO.</th>
+            <th>YEAR OF INITIATION</th>
+            <th>SHORT CASE NAME</th>
+            <th>SUMMARY</th>
+            <th>OUTCOME OF ORIGINAL PROCEEDINGS</th>
+            <th>RESPONDENT STATE</th>
+            <th>HOME STATE OF INVESTOR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2024</td>
+            <td><a href="#" class="case-link">Indo Gold v. India</a></td>
+            <td><b>Investment:</b> Investment in the Bhukia gold mining project in Rajasthan through wholly-owned local subsidiary Metal Mining Pvt Ltd.<br><br><b>Summary:</b> rClaims arising out of local authorities’ rejection of the prospecting licence application made by Metal Mining Pvt Ltd for the Bhukia mining project.</td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>Australia</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>2024</td>
+            <td><a href="#" class="case-link">Vedanta v. India (II)</a></td>
+            <td><b>Investment:</b><br><br><b>Summary:</b></td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>2022</td>
+            <td><a href="#" class="case-link">Devas v. India (II)</a></td>
+            <td><b>Investment:</b><br><br><b>Summary:</b></td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>Mauritius</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>2021</td>
+            <td><a href="#" class="case-link">Earlyguard v. India</a></td>
+            <td><b>Investment:</b><br><br><b>Summary:</b></td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>2020</td>
+            <td><a href="#" class="case-link">GPIX v. India</a></td>
+            <td><b>Investment:</b><br><br></td>
+            <td>Decided in favour of State</td>
+            <td>India</td>
+            <td>Mauritius</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>2020</td>
+            <td><a href="#" class="case-link">Maxis and Global Communications v. India</a></td>
+            <td><b>Investment:</b><br><br><b>Summary:</b></td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>Malaysia<br>Mauritius</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>2019</td>
+            <td><a href="#" class="case-link">Kowepo v. India</a></td>
+            <td><b>Investment:</b> Shareholding of 40% in Pioneer Gas Power Plant Limited (PGPL), the operator of a 388 MW project in the Raigad district in the Indian state of Maharashtra.<br><br><b>Summary:</b></td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>Korea, Republic of</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>2017</td>
+            <td><a href="#" class="case-link">Carissa v. India</a></td>
+            <td><b>Investment:</b><br><br><b>Summary:</b></td>
+            <td>Discontinued</td>
+            <td>India</td>
+            <td>Mauritius</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>2017</td>
+            <td><a href="#" class="case-link">Nissan v. India</a></td>
+            <td><b>Investment:</b> 70 percent share in Renault Nissan Automotive India Private Limited, a consortium that built an industrial automotive facility in Chennai, the capital of Tamil Nadu.<br><br><b>Summary:</b> Claims arising out of non-payment of incentives by the Indian State government of Tamil Nadu, which had been allegedly promised to the claimant under the agreement for building of a car plant, signed with the State government in 2008.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>Japan</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>2017</td>
+            <td><a href="#" class="case-link">Vodafone v. India (II)</a></td>
+            <td><b>Investment:</b> Ownership of an Indian telecoms company.<br><br><b>Summary:</b> Claims arising out of a retrospective transaction tax imposed by the Government over claimants' acquisition of Indian-based Hutchison Whampoa telecoms business.</td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>2016</td>
+            <td><a href="#" class="case-link">Astro and South Asia Entertainment v. India</a></td>
+            <td><b>Investment:</b> Investment in the Indian satellite TV company Sun Direct.<br><br><b>Summary:</b>: Claims arising out of an allegedly unfair and biased criminal investigation by the Government relating to the suspected bribery by the claimants of Indian government officials.</td>
+            <td>Discontinued</td>
+            <td>India</td>
+            <td>United Kingdom<br>Mauritius</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>2016</td>
+            <td><a href="#" class="case-link">RAKIA v. India</a></td>
+            <td><b>Investment:</b> Shareholding in ANRAK Aluminium Ltd ("ANRAK"), an Indian company incorporated to establish and operate an alumina and aluminium refinery and smelter in the state of Andhra Pradesh in South India.<br><br><b>Summary:</b> Claims arising out of the alleged non-fulfillment and subsequent cancellation of a memorandum of understanding signed in 2007 between the Government of the Indian state of Andhra Pradesh and the claimant. In the memorandum, the state government agreed to direct a state-owned mining company to supply bauxite to ANRAK, a company in the claimant held shares, in order for ANRAK to operate an alumina and aluminium refinery and smelter.</td>
+            <td>Decided in favour of State</td>
+            <td>India</td>
+            <td>United Arab Emirates</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>2016</td>
+            <td><a href="#" class="case-link">Vedanta v. India (I)</a></td>
+            <td><b>Investment:</b> 59.9% shareholding in Cairn India Limited, one of the largest oil and gas exploration companies in India.<br><br><b>Summary:</b> Claims arising out of a tax bill of approximately USD 3.29 billion, imposed by the Government on Cairn India Limited in 2015, for the alleged failure to pay taxes on capital gains arising from Cairn’s operations in 2006-2007.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>2015</td>
+            <td><a href="#" class="case-link">Cairn v. India</a></td>
+            <td><b>Investment:</b> Interests in subsidiary Cairn UK Holdings Limited and 10 percent shareholding in Cairn India Limited (CIL), one of the largest oil and gas exploration companies in India.<br><br><b>Summary:</b> Claims arising out of a draft assessment order issued by the Indian Income Tax Department addressed to the claimant’s subsidiary, Cairn UK Holdings Limited, in respect of fiscal year 2006/7 in the amount of USD 1.6 billion plus any applicable interest and penalties; and the alleged prohibition for the claimant to sell its 10 per cent shareholding in Cairn India Limited.</td>
+            <td>Decided in favour of investor</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>2014</td>
+            <td><a href="#" class="case-link">LDA v. India</a></td>
+            <td><b>Investment:</b> Shareholding in a joint venture with Indian port operator ABG Infralogistics to implement a project aimed at the mechanisation of berths at Haldia in West Bengal.<br><br><b>Summary:</b> Claims arising out of a series of measures by the Indian Government that allegedly prevented the effective implementation of a joint venture related to a port modernization project at Haldia, in the city of Kolkata, in which the claimant held stakes; including allegedly failing to provide protection and security to the project, and to obey court orders concerning the removal of equipment from the port.</td>
+            <td>Decided in favour of State</td>
+            <td>India</td>
+            <td>France</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>2014</td>
+            <td><a href="#" class="case-link">Vodafone v. India (I)</a></td>
+            <td><b>Investment:</b> Ownership of an Indian telecoms company.<br><br><b>Summary:</b> Claims arising out of a retrospective transaction tax imposed by the Government over claimant's acquisition of Indian-based Hutchison Whampoa telecoms business.</td>
+            <td>Decided in favour of investor</td>
+            <td>India</td>
+            <td>Netherlands</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>2013</td>
+            <td><a href="#" class="case-link">Deutsche Telekom v. India</a></td>
+            <td><b>Investment:</b> Indirect shareholding (20 per cent stake via a Singaporean subsidiary) in the Indian company Devas Multimedia, that had concluded contracts with Antrix - related to the Indian Space Research Organisation- for the launch and operation of two satellites.<br><br><b>Summary:</b> Claims arising out of the Government's cancellation of a contract concluded with Devas, a company in which the claimant held interests, concerning the provision of broadband services to Indian consumers.</td>
+            <td>Decided in favour of investor</td>
+            <td>India</td>
+            <td>Germany</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>2013</td>
+            <td><a href="#" class="case-link">KHML v. India</a></td>
+            <td><b>Investment:</b> Minority shareholding (27 per cent) in Loop Telecom, a telecommunications company that held twenty one 2G licences in India.<br><br><b>Summary:</b> Claims arising out of the cancellation by India's Supreme Court of a telecoms licence held by a company in which the claimant had invested, and its reassignment through a public auction process.</td>
+            <td>Pending</td>
+            <td>India</td>
+            <td>Mauritius</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>2012</td>
+            <td><a href="#" class="case-link">Devas v. India (I)</a></td>
+            <td><b>Investment:</b> Shareholding in Devas Multimedia Private Limited, an Indian company that had concluded a telecommunication contract with an Indian state entity under the control of the Indian Space Research Organization.<br><br><b>Summary:</b> Claims arising out of the alleged Government's cancellation of an agreement to lease capacity in the S-Band, part of the electromagnetic spectrum, for claimants' subsidiary to launch two satellites to provide multimedia services to mobile users across India.</td>
+            <td>Decided in favour of investor</td>
+            <td>India</td>
+            <td>Mauritius</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>2012</td>
+            <td><a href="#" class="case-link">Naumchenko and others v. India</a></td>
+            <td><b>Investment:</b> Majority shareholding in the Indian telecoms company ByCell India.<br><br><b>Summary:</b> Claims arising out of the withdrawal by Indian authorities of an approval to grant frequency allocation licences to claimants' local telecoms company ByCell, after it had previously obtained clearance from India's Foreign Investment Board.</td>
+            <td>Decided in favour of State</td>
+            <td>India</td>
+            <td>Russian Federation<br>Cyprus</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>2010</td>
+            <td><a href="#" class="case-link">White Industries v. India</a></td>
+            <td><b>Investment:</b> Rights under certain contract concluded with a State-owned mining company, a bank guarantee and an ICC award rendered in White Industries' favour.<br><br><b>Summary:</b> Claims arising out of alleged judicial delays by the Government of India that left the claimant unable to enforce an ICC award for over nine years concerning a contractual dispute with Coal India, a State-owned mining entity.</td>
+            <td>Decided in favour of investor</td>
+            <td>India</td>
+            <td>Australia</td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">ABN Amro v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>Netherlands</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">ANZEF v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">BNP Paribas v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>France</td>
+          </tr>
+          <tr>
+            <td>25</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">Credit Lyonnais v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>France</td>
+          </tr>
+          <tr>
+            <td>26</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">Credit Suisse v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>Switzerland</td>
+          </tr>
+          <tr>
+            <td>27</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">Erste Bank v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>Austria</td>
+          </tr>
+          <tr>
+            <td>28</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">Offshore Power v. India</a></td>
+            <td><b>Investment:</b> Majority shareholding, through subsidiary company, of the Indian Dabhol Power Company.<br><br><b>Summary:</b> Claims arising out of respondent alleged failure to protect claimants' investment in the Dabhol power plant project in India, which resulted in significant losses to the claimants' financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>Netherlands</td>
+          </tr>
+          <tr>
+            <td>29</td>
+            <td>2004</td>
+            <td><a href="#" class="case-link">Standard Chartered Bank v. India</a></td>
+            <td><b>Investment:</b> Creditor of loans associated with the financing of the Dabhol energy project in Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of respondent's alleged failure to protect the investor's loans in the Dabhol combined cycle power plant project in India, the default of which resulted in significant losses to the claimant's financing of the failed project.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>United Kingdom</td>
+          </tr>
+          <tr>
+            <td>30</td>
+            <td>2003</td>
+            <td><a href="#" class="case-link">Bechtel v. India</a></td>
+            <td><b>Investment:</b> Shareholding in local corporations established to operate the Dabhol power project in the state of Maharashtra, India.<br><br><b>Summary:</b> Claims arising out of an alleged reversal in the energy policy of the local government between the beginning of the power project in which the claimants invested and its intended consummation, as a result of political change in the Government.</td>
+            <td>Settled</td>
+            <td>India</td>
+            <td>Mauritius</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination-controls" style="display: flex; justify-content: center; align-items: center; margin-top: 16px; margin-bottom: 48px; gap: 12px;">
+      <button id="prev-page" class="pagination-btn">Prev</button>
+      <span id="page-number" style="font-weight: bold;">1</span>
+      <button id="next-page" class="pagination-btn">Next</button>
+    </div>
+  </div>
+  <div id="claimant" class="table-section">
+    <h2>Cases as Home State of Claimant</h2>
+    <p>Table data will go here.</p>
+  </div>
+  <div id="case-detail-modal" class="case-detail-modal" style="display:none;">
+    <div class="case-detail-card">
+      <button class="case-detail-close" onclick="closeCaseDetail()">&times;</button>
+      <h2 class="case-detail-title">Case Details</h2>
+      <div class="case-detail-accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">Name of the Case</button>
+          <div class="accordion-content" id="case-name"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Full Case Name</button>
+          <div class="accordion-content" id="full-case-name"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Case Number</button>
+          <div class="accordion-content" id="case-number"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Nature of Proceedings</button>
+          <div class="accordion-content" id="nature-of-proceedings"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Type of case</button>
+          <div class="accordion-content" id="type-of-case"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Rules of Arbitration</button>
+          <div class="accordion-content" id="rules-of-arbitration"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Respondent</button>
+          <div class="accordion-content" id="respondent-field"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Date of Introduction</button>
+          <div class="accordion-content" id="date-of-introduction"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Seat of Arbitration</button>
+          <div class="accordion-content" id="seat-of-arbitration"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Industries</button>
+          <div class="accordion-content" id="industries"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Status of the Case</button>
+          <div class="accordion-content" id="status-of-case"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Claimant’s Country of Origin</button>
+          <div class="accordion-content" id="claimant-country"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Applicable Treaties</button>
+          <div class="accordion-content" id="applicable-treaties"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Administering Institution</button>
+          <div class="accordion-content" id="administering-institution"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">State Government Involved</button>
+          <div class="accordion-content" id="state-gov-involved"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Parties and their Representations (Claimant)</button>
+          <div class="accordion-content" id="parties-claimant"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Parties and their Representations (Respondent)</button>
+          <div class="accordion-content" id="parties-respondent"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Composition of the Tribunal</button>
+          <div class="accordion-content" id="tribunal-composition"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Breaches Alleged/Found</button>
+          <div class="accordion-content" id="breaches-alleged-found"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Summary</button>
+          <div class="accordion-content" id="summary"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Amount of Compensation</button>
+          <div class="accordion-content" id="amount-of-compensation"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Latest Documents of the Case</button>
+          <div class="accordion-content" id="latest-documents"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Other Document/s of the Case</button>
+          <div class="accordion-content" id="other-documents"></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Links to Background Scores</button>
+          <div class="accordion-content" id="background-scores"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <footer class="site-footer">
+    <a href="https://www.linkedin.com/in/thethakurshivam/" target="_blank" style="color: inherit; text-decoration: none;">© 2025 RRU. All rights reserved. Developed by Shivam.</a>
+  </footer>
+</body>
+</html>

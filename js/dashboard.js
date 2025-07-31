@@ -1009,3 +1009,48 @@ if (respondentTable && paginationControls) {
   // Initialize
   showPage(currentPage);
 }
+
+// PAGINATION LOGIC FOR CLAIMANT CASES TABLE
+const claimantTable = document.querySelector('#claimant .dashboard-table tbody');
+const claimantPaginationControls = document.querySelector('#claimant .pagination-controls');
+const claimantPrevBtn = document.getElementById('prev-page-claimant');
+const claimantNextBtn = document.getElementById('next-page-claimant');
+const claimantPageNumberSpan = document.getElementById('page-number-claimant');
+
+if (claimantTable && claimantPaginationControls) {
+  // Collect all rows
+  const allClaimantRows = Array.from(claimantTable.querySelectorAll('tr'));
+  const claimantRowsPerPage = 8; // Maximum 8 cases per page
+  let claimantCurrentPage = 1;
+  const claimantTotalPages = Math.ceil(allClaimantRows.length / claimantRowsPerPage);
+
+  function showClaimantPage(page) {
+    // Hide all rows
+    allClaimantRows.forEach(row => row.style.display = 'none');
+    // Show only the rows for the current page
+    const startIdx = (page - 1) * claimantRowsPerPage;
+    const endIdx = startIdx + claimantRowsPerPage;
+    allClaimantRows.slice(startIdx, endIdx).forEach(row => row.style.display = '');
+    // Update page number
+    claimantPageNumberSpan.textContent = page;
+    // Disable/enable buttons
+    claimantPrevBtn.disabled = page === 1;
+    claimantNextBtn.disabled = page === claimantTotalPages;
+  }
+
+  claimantPrevBtn.addEventListener('click', function() {
+    if (claimantCurrentPage > 1) {
+      claimantCurrentPage--;
+      showClaimantPage(claimantCurrentPage);
+    }
+  });
+  claimantNextBtn.addEventListener('click', function() {
+    if (claimantCurrentPage < claimantTotalPages) {
+      claimantCurrentPage++;
+      showClaimantPage(claimantCurrentPage);
+    }
+  });
+
+  // Initialize
+  showClaimantPage(claimantCurrentPage);
+}

@@ -1055,3 +1055,19 @@ body {
   background: #002244;
   color: #fff;
 }
+
+.case-detail-card::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+.case-detail-card::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 4px;
+}
+.case-detail-card::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+.case-detail-card {
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc transparent;
+}
